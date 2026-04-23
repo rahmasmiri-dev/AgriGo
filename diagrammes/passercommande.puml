@@ -1,0 +1,32 @@
+@startuml
+skinparam style strictuml
+actor Client
+
+participant ":InterfaceCommande" as UI
+participant ":Commande" as C
+participant ":LigneCommande" as LC
+participant ":Produit" as P
+
+Client -> UI : saisirInformations(panier)
+activate UI
+
+UI -> C : créerCommande(date)
+activate C
+
+loop pour chaque produit dans panier
+    UI -> LC : créerLigne(quantite)
+    activate LC
+    LC -> P : verifierPrix()
+    LC --> UI : lignePrête
+    deactivate LC
+end
+
+UI -> C : calculerTotal()
+C -> LC : obtenirSousTotal()
+C --> UI : montantTotal
+deactivate C
+
+UI --> Client : confirmationCommande(total)
+deactivate UI
+
+@enduml
