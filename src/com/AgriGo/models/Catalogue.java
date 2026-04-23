@@ -51,4 +51,22 @@ public class Catalogue {
     public int getNombreProduits() {
         return produits.size();
     }
+
+    // Pour compatibilité avec Admin
+    public int nombreDeProduits() {
+        return getNombreProduits();
+    }
+
+    // Pour compatibilité avec Client
+    public void rechercherProduit(String nomProduit) {
+        List<Produit> resultats = rechercherParNom(nomProduit);
+        if (resultats.isEmpty()) {
+            System.out.println("Aucun produit trouvé pour : " + nomProduit);
+        } else {
+            System.out.println("Produits trouvés pour '" + nomProduit + "' :");
+            for (Produit p : resultats) {
+                System.out.println(p);
+            }
+        }
+    }
 }
