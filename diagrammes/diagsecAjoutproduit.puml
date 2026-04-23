@@ -1,0 +1,16 @@
+@startuml
+actor Admin
+participant "Interface UI" as UI
+participant "ProduitController" as PC
+participant "ProduitService" as PS
+participant "ProduitRepository" as PR
+
+Admin -> UI : saisir infos produit
+UI -> PC : ajouterProduit(données)
+PC -> PS : validerEtAjouter(données)
+PS -> PR : save(produit)
+PR --> PS : produit enregistré
+PS --> PC : succès
+PC --> UI : confirmation
+UI --> Admin : produit ajouté
+@enduml
