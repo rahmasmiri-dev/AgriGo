@@ -1,0 +1,65 @@
+@startuml
+
+left to right direction
+
+actor Utilisateur
+actor Client
+actor Agriculteur
+actor Admin
+
+' Héritage
+Utilisateur <|-- Client
+Utilisateur <|-- Agriculteur
+Utilisateur <|-- Admin
+
+rectangle AgriGo {
+
+  (S'inscrire) as INS
+  (S'authentifier) as AUTH
+
+  (Consulter catalogue) as CAT
+  (Rechercher produit) as RECH
+
+  (Ajouter produit) as ADD
+  (Modifier produit) as MOD
+  (Supprimer produit) as SUP
+
+  (Passer commande) as CMD
+  (Suivre commande) as SUIV
+
+  (Gérer utilisateurs) as GESTU
+  (Consulter statistiques) as STATS
+
+  ' Acteurs
+  Client -- INS
+  Client -- CAT
+  Client -- RECH
+  Client -- CMD
+  Client -- SUIV
+
+  Agriculteur -- INS
+  Agriculteur -- ADD
+  Agriculteur -- MOD
+  Agriculteur -- SUP
+
+  Admin -- GESTU
+  Admin -- STATS
+
+  ' INCLUDE (tout passe par authentification sauf inscription)
+  CAT ..> AUTH : <<include>>
+  RECH ..> AUTH : <<include>>
+  ADD ..> AUTH : <<include>>
+  MOD ..> AUTH : <<include>>
+  SUP ..> AUTH : <<include>>
+  CMD ..> AUTH : <<include>>
+  SUIV ..> AUTH : <<include>>
+  GESTU ..> AUTH : <<include>>
+  STATS ..> AUTH : <<include>>
+
+  ' EXTEND
+  RECH ..> CAT : <<extend>>
+  SUIV ..> CMD : <<extend>>
+
+}
+
+@enduml

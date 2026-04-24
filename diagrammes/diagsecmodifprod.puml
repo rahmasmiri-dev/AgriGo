@@ -1,0 +1,16 @@
+@startuml
+actor Admin
+participant UI
+participant ProduitController
+participant ProduitService
+participant ProduitRepository
+
+Admin -> UI : modifier produit
+UI -> ProduitController : updateProduit(id, données)
+ProduitController -> ProduitService : modifier(données)
+ProduitService -> ProduitRepository : update(produit)
+ProduitRepository --> ProduitService : ok
+ProduitService --> ProduitController : succès
+ProduitController --> UI : confirmation
+UI --> Admin : produit modifié
+@enduml
