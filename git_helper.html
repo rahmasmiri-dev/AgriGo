@@ -2,124 +2,163 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Guide Git Débutant</title>
+    <title>Guide Complet Git & Terminal</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 40px;
             line-height: 1.6;
+            color: #333;
+            background-color: #f9f9f9;
         }
-        h1, h2 {
-            color: #2c3e50;
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
+        h1 { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+        h2 { color: #2980b9; margin-top: 30px; background: #eef7fd; padding: 10px; border-left: 5px solid #3498db; }
+        h3 { color: #16a085; }
         code {
-            background: #f4f4f4;
-            padding: 5px;
+            background: #2d3436;
+            color: #fab1a0;
+            padding: 8px;
             display: block;
             margin: 10px 0;
+            border-radius: 4px;
+            font-family: 'Consolas', monospace;
         }
+        .desc { margin-bottom: 15px; display: block; font-style: italic; color: #555; }
         table {
             border-collapse: collapse;
-            width: 60%;
+            width: 100%;
+            margin: 20px 0;
         }
         table, th, td {
-            border: 1px solid #333;
-            padding: 8px;
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
         }
+        th { background-color: #3498db; color: white; }
+        tr:nth-child(even) { background-color: #f2f2f2; }
+        .warning { background: #ffeaa7; border: 1px solid #fab1a0; padding: 15px; border-radius: 5px; margin: 20px 0; }
+        .error-note { color: #d63031; font-weight: bold; }
     </style>
 </head>
 <body>
 
-<h1>📘 Guide Git pour Débutant</h1>
+<div class="container">
+    <h1>📘 Guide Complet : Maîtriser Git et le Terminal Windows</h1>
 
-<h2>🎯 Objectif</h2>
-<p>Apprendre à créer et gérer un dépôt Git avec <strong>5 collaborateurs</strong>, avec <strong>1 branche par collaborateur</strong>.</p>
+    <p>Ce guide récapitule les commandes essentielles pour naviguer dans votre système et collaborer efficacement sur un projet Git à plusieurs (5 collaborateurs).</p>
 
-<h2>🟢 1. Ouvrir un dossier local</h2>
-<code>cd chemin/vers/ton/dossier</code>
+    <h2>💻 1. Commandes Système (Windows)</h2>
+    <span class="desc">Pour naviguer dans vos dossiers et visualiser vos fichiers.</span>
+    <code>cd D:\2BI\s2\agl\git</code>
+    <p><strong>cd [chemin]</strong> : Change le répertoire courant.</p>
+    
+    <code>D:</code>
+    <p><strong>D:</strong> : Change de lecteur pour passer sur la partition D.</p>
+    
+    <code>dir</code>
+    <p><strong>dir</strong> : Liste les fichiers et dossiers présents dans le répertoire actuel.</p>
+    
+    <code>tree /f</code>
+    <p><strong>tree /f</strong> : Affiche l'arborescence complète avec tous les fichiers.</p>
 
-<h2>🟡 2. Initialiser Git</h2>
-<code>git init</code>
+    <h2>⚙️ 2. Configuration et Vérification Git</h2>
+    <span class="desc">À faire lors de la première installation.</span>
+    <code>git --version</code>
+    <p>Vérifie si Git est installé et affiche sa version.</p>
 
-<h2>🔵 3. Lier au dépôt distant</h2>
-<code>git remote add origin https://github.com/user/NomProjet.git</code>
-<code>git remote -v</code>
+    <code>git config --global user.name "votre_nom"</code>
+    <code>git config --global user.email "votre_email@gmail.com"</code>
+    <p>Définit votre identité pour tous vos dépôts.</p>
 
-<h2>🟣 4. Ajouter et valider</h2>
-<code>git add .</code>
-<code>git commit -m "Initial commit"</code>
+    <code>git config --list</code>
+    <p>Affiche tous les paramètres de configuration actuels.</p>
 
-<h2>🟠 5. Envoyer vers GitHub</h2>
-<code>git push -u origin main</code>
+    <h2>🌿 3. Gestion du Dépôt et des Branches</h2>
+    <span class="desc">Pour organiser le travail d'équipe en parallèle.</span>
+    <code>git clone https://github.com/user/NomProjet.git</code>
+    <p>Télécharge une copie distante du projet sur votre ordinateur.</p>
 
-<h2>🔴 6. Mettre à jour</h2>
-<code>git pull origin main</code>
-<code>git push</code>
+    <code>git branch feature-melak</code>
+    <p>Crée une nouvelle branche pour vos développements.</p>
 
-<h2>🟤 7. Créer une branche</h2>
-<code>git checkout -b feature-nom</code>
+    <code>git branch -a</code>
+    <p>Liste toutes les branches (locales en blanc/noir et distantes en rouge).</p>
 
-<p>Exemple :</p>
-<code>
-git checkout -b feature-rahma<br>
-git checkout -b feature-gazzah<br>
-git checkout -b feature-sam<br>
-git checkout -b feature-wael<br>
-git checkout -b feature-amine
-</code>
+    <code>git switch feature-melak</code>
+    <p>Bascule sur la branche spécifiée pour commencer à travailler.</p>
 
-<h2>⚫ 8. Envoyer la branche</h2>
-<code>git push origin feature-nom</code>
+    <code>git merge feature-melak</code>
+    <p>Fusionne les modifications de la branche "feature-melak" dans la branche actuelle (souvent main).</p>
 
-<h2>⚪ 9. Voir les branches</h2>
-<code>git branch</code>
-<code>git branch -r</code>
-<code>git branch -a</code>
+    <h2>🔄 4. Cycle de Modification (Flux de travail)</h2>
+    <span class="desc">Les commandes répétées quotidiennement.</span>
+    <code>git status</code>
+    <p>Affiche l'état des fichiers (modifiés, suivis ou non).</p>
 
-<h2>👥 Organisation</h2>
-<table>
-<tr><th>Membre</th><th>Branche</th></tr>
-<tr><td>Rahma</td><td>feature-rahma</td></tr>
-<tr><td>Gazzah</td><td>feature-gazzah</td></tr>
-<tr><td>Sam</td><td>feature-sam</td></tr>
-<tr><td>Wael</td><td>feature-wael</td></tr>
-<tr><td>Amine</td><td>feature-amine</td></tr>
-</table>
+    <code>git add .</code>
+    <p>Ajoute toutes les modifications à la zone de préparation (staging).</p>
 
-<h2>⚠️ Bonnes pratiques</h2>
-<ul>
-    <li>Ne pas travailler sur main</li>
-    <li>Utiliser une branche personnelle</li>
-    <li>Faire plusieurs commits</li>
-    <li>Messages clairs</li>
-</ul>
+    <code>git commit -m "Description claire du changement"</code>
+    <p>Enregistre vos modifications dans l'historique local.</p>
 
-<h2>❌ Erreurs à éviter</h2>
-<ul>
-    <li>Oublier git pull</li>
-    <li>Travailler sur la même branche</li>
-    <li>Ne pas commit régulièrement</li>
-</ul>
+    <h2>☁️ 5. Synchronisation avec GitHub</h2>
+    <span class="desc">Envoyer et recevoir du code du serveur distant.</span>
+    <code>git fetch --all</code>
+    <p>Récupère les mises à jour de toutes les branches du serveur sans modifier vos fichiers.</p>
 
-<h2>🧠 Résumé</h2>
-<code>
-git init<br>
-git remote add origin URL<br>
-git add .<br>
-git commit -m "message"<br>
-git push<br>
-git pull<br>
-git checkout -b branche<br>
-git branch
-</code>
+    <code>git pull origin main</code>
+    <p>Télécharge et fusionne les nouveautés du serveur dans votre branche actuelle.</p>
 
-<h2>🏁 Conclusion</h2>
-<p>Avec cette méthode :</p>
-<ul>
-    <li>✔️ 1 dépôt partagé</li>
-    <li>✔️ 5 branches</li>
-    <li>✔️ Travail organisé sans conflit</li>
-</ul>
+    <code>git push origin feature-melak</code>
+    <p>Envoie votre branche locale vers GitHub.</p>
+
+    <h2>📜 6. Consultation de l'Historique</h2>
+    <span class="desc">Pour voir qui a fait quoi.</span>
+    <code>git log --oneline --graph --all</code>
+    <p>Affiche une version visuelle et simplifiée de l'historique de toutes les branches.</p>
+
+    <code>git log --author="Rahma"</code>
+    <p>Filtre les commits pour voir uniquement ceux de Rahma.</p>
+
+    <code>git shortlog -s -n</code>
+    <p>Résumé du nombre de commits par auteur (classement des contributeurs).</p>
+
+    <h2>👥 Organisation de l'Équipe</h2>
+    <table>
+        <tr><th>Collaborateur</th><th>Branche de travail</th></tr>
+        <tr><td>Rahma</td><td>feature-rahma</td></tr>
+        <tr><td>Melak</td><td>feature-melak</td></tr>
+        <tr><td>Sam</td><td>feature-sam</td></tr>
+        <tr><td>Wael</td><td>feature-wael</td></tr>
+        <tr><td>Amine</td><td>feature-amine</td></tr>
+    </table>
+
+    <div class="warning">
+        <h2>❌ Erreurs courantes à éviter</h2>
+        <ul>
+            <li><span class="error-note">git--version</span> : Attention à l'espace ! La commande est <code>git --version</code>.</li>
+            <li><span class="error-note">fetch</span> ou <span class="error-note">get status</span> : N'oubliez jamais le mot <strong>git</strong> devant (ex: <code>git fetch</code>).</li>
+            <li>Ne travaillez jamais directement sur la branche <strong>main</strong>.</li>
+            <li>Faites un <strong>git pull</strong> avant de commencer votre journée pour éviter les conflits.</li>
+        </ul>
+    </div>
+
+    <h2>🏁 Conclusion</h2>
+    <p>En suivant ce flux, vous garantissez un projet organisé :</p>
+    <ul>
+        <li>✔️ Un historique propre grâce aux messages de commit clairs.</li>
+        <li>✔️ Aucune perte de code grâce aux branches individuelles.</li>
+        <li>✔️ Une synchronisation parfaite avec GitHub.</li>
+    </ul>
+</div>
 
 </body>
 </html>
