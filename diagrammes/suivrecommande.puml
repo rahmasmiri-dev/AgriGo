@@ -1,0 +1,27 @@
+@startuml
+skinparam style strictuml
+
+actor Client
+participant ":InterfaceClient" as UI
+participant ":GestionnaireCommande" as GC
+participant ":Commande" as C
+
+Client -> UI : cliquerConsulterCommandes()
+activate UI
+
+UI -> GC : recupererListeCommandes(idClient)
+activate GC
+GC --> UI : listeCommandes
+deactivate GC
+
+Client -> UI : selectionnerCommande(idCommande)
+UI -> C : obtenirDetails()
+activate C
+C -> C : verifierEtat()
+C --> UI : details + etatCommande
+deactivate C
+
+UI --> Client : afficherDetailsEtEtat()
+deactivate UI
+
+@enduml
