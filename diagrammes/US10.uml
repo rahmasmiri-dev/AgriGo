@@ -1,0 +1,39 @@
+
+
+actor Admin
+participant "Interface" as UI
+participant "Service Admin" as SA
+participant "Base de données" as DB
+
+Admin -> UI : gérer utilisateurs
+UI -> SA : getUsers()
+
+SA -> DB : récupérer liste utilisateurs
+DB --> SA : liste
+
+SA --> UI : afficher utilisateurs
+
+alt Ajouter utilisateur
+  Admin -> UI : ajouter utilisateur
+  UI -> SA : addUser()
+  SA -> DB : insert
+  DB --> SA : ok
+end
+
+alt Modifier utilisateur
+  Admin -> UI : modifier utilisateur
+  UI -> SA : updateUser()
+  SA -> DB : update
+  DB --> SA : ok
+end
+
+alt Supprimer utilisateur
+  Admin -> UI : supprimer utilisateur
+  UI -> SA : deleteUser()
+  SA -> DB : delete
+  DB --> SA : ok
+end
+
+UI --> Admin : confirmation
+
+@enduml
