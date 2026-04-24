@@ -1,0 +1,18 @@
+@startuml
+
+actor Client
+participant "Interface UI" as UI
+participant "CatalogueController" as CC
+participant "CatalogueService" as CS
+participant "ProduitRepository" as PR
+
+Client -> UI : consulter catalogue
+UI -> CC : getProduits()
+CC -> CS : recupererProduits()
+CS -> PR : findAll()
+PR --> CS : liste produits
+CS --> CC : liste produits
+CC --> UI : afficher produits
+UI --> Client : catalogue affiché
+
+@enduml

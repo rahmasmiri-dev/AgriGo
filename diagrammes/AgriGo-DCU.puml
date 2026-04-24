@@ -1,0 +1,48 @@
+@startuml
+left to right direction
+
+actor Client
+actor Agriculteur
+actor Admin
+
+rectangle AgriGo {
+  (S'inscrire)
+  (S'authentifier)
+  (Consulter catalogue)
+  (Rechercher produit)
+  (Ajouter produit)
+  (Modifier produit)
+  (Supprimer produit)
+  (Passer commande)
+  (Suivre commande)
+  (Gérer utilisateurs)
+  (Consulter statistiques)
+}
+
+Client -- (S'inscrire)
+Client -- (Consulter catalogue)
+Client -- (Rechercher produit)
+Client -- (Passer commande)
+Client -- (Suivre commande)
+
+Agriculteur -- (S'inscrire)
+Agriculteur -- (Ajouter produit)
+Agriculteur -- (Modifier produit)
+Agriculteur -- (Supprimer produit)
+
+Admin -- (Gérer utilisateurs)
+Admin -- (Consulter statistiques)
+
+(Consulter catalogue) ..> (S'authentifier) : <<include>>
+(Rechercher produit) ..> (S'authentifier) : <<include>>
+(Ajouter produit) ..> (S'authentifier) : <<include>>
+(Modifier produit) ..> (S'authentifier) : <<include>>
+(Supprimer produit) ..> (S'authentifier) : <<include>>
+(Passer commande) ..> (S'authentifier) : <<include>>
+(Suivre commande) ..> (S'authentifier) : <<include>>
+(Gérer utilisateurs) ..> (S'authentifier) : <<include>>
+(Consulter statistiques) ..> (S'authentifier) : <<include>>
+
+(Rechercher produit) ..> (Consulter catalogue) : <<extend>>
+(Suivre commande) ..> (Passer commande) : <<extend>>
+@enduml
