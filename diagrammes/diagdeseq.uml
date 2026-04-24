@@ -1,0 +1,42 @@
+@startuml
+
+actor Client
+
+participant "Interface" as UI
+participant "Catalogue" as CAT
+participant "Commande" as CMD
+participant "Produit" as PROD
+
+' Consultation catalogue
+Client -> UI : consulter catalogue
+UI -> CAT : afficherCatalogue()
+CAT --> UI : listeProduits
+UI --> Client : afficher produits
+
+' Sélection produit
+Client -> UI : choisir produit
+
+loop pour chaque produit choisi
+  UI -> PROD : verifierStock()
+  PROD --> UI : stock disponible
+end
+
+' Création commande
+UI -> CMD : creerCommande()
+
+alt Stock disponible
+  CMD -> CMD : calculerTotal()
+  CMD --> UI : confirmation
+  UI --> Client : afficher succès
+else Stock insuffisant
+  CMD --> UI : erreur stock
+  UI --> Client : afficher erreur
+end
+
+opt Livraison
+  Client -> UI : demander livraison
+  UI -> CMD : ajouterLivraison()
+  CMD --> UI : confirmation livraison
+end
+
+@enduml

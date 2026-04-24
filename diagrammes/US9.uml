@@ -1,0 +1,17 @@
+@startuml
+
+actor Admin
+participant "Interface" as UI
+participant "Service Admin" as SA
+participant "Base de données" as DB
+
+Admin -> UI : accéder tableau de bord
+UI -> SA : getDashboardData()
+
+SA -> DB : récupérer statistiques (users, commandes, produits)
+DB --> SA : données
+
+SA --> UI : données tableau de bord
+UI --> Admin : afficher dashboard
+
+@enduml

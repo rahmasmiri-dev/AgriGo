@@ -1,4 +1,5 @@
 @startuml
+
 class Utilisateur {
   - id : int
   - nom : String
@@ -30,57 +31,56 @@ class Produit {
   - nom : String
   - prix : double
   - quantite : int
-  - categorie : String
-  + Produit(idProduit, nom, prix, quantite, categorie)
-  + getIdProduit()
-  + getNom()
-  + getPrix()
-  + getQuantite()
-  + getCategorie()
-  + setNom(nom)
-  + setPrix(prix)
-  + setQuantite(quantite)
-  + setCategorie(categorie)
-  + toString()
-}
-
-class GestionProduit {
-  - listeProduits : List<Produit>
-  - compteurId : int
-  + ajouter(nom, prix, quantite, categorie)
-  + modifier(idProduit, nom, prix, quantite, categorie)
-  + modifierNom(idProduit, nouveauNom)
-  + modifierPrix(idProduit, nouveauPrix)
-  + modifierQuantite(idProduit, nouvelleQuantite)
-  + supprimer(idProduit)
-  + afficher()
-  + afficherProduit(idProduit)
-  + afficherParNom(nom)
-  + afficherParCategorie(categorie)
-  + afficherParNomEtCategorie(nom, categorie)
-  + getNombreProduits()
-  + getListeProduits()
+  + getIdProduit() : int
+  + getNom() : String
+  + setNom(String)
+  + getPrix() : double
+  + setPrix(double)
+  + getQuantite() : int
+  + setQuantite(int)
 }
 
 class Commande {
   - idCommande : int
-  - date : Date
+  - date : LocalDate
   - total : double
   + calculerTotal()
+  + ajouterLigne(LigneCommande)
 }
 
 class LigneCommande {
+  - produit : Produit
   - quantite : int
+  + getTotal() : double
 }
 
 class Catalogue {
+  - produits : List<Produit>
+  + ajouterProduit(Produit)
+  + supprimerProduit(Produit)
   + afficherCatalogue()
-  + rechercherProduit()
+  + rechercherProduit(String)
+  + rechercherParPrixMin(double) : List<Produit>
+  + rechercherParPrixMax(double) : List<Produit>
+  + rechercherParPlage(double, double) : List<Produit>
+  + rechercherParQuantiteMin(int) : List<Produit>
+  + obtenirTousProduits() : List<Produit>
+  + nombreDeProduits() : int
+}
+
+class GestionProduitsEtCatalogue {
+  - catalogue : Catalogue
+  + ajouterProduit(Produit)
+  + supprimerProduit(Produit)
+  + modifierNomProduit(Produit, String)
+  + modifierPrixProduit(Produit, double)
+  + modifierQuantiteProduit(Produit, int)
+  + modifierProduit(Produit, String, double, int)
 }
 
 class Livraison {
   - statut : String
-  + mettreAJourStatut()
+  + mettreAJourStatut(String)
 }
 
 ' Héritage
@@ -92,14 +92,15 @@ Utilisateur <|-- Admin : hérite
 Client "1" -- "0..*" Commande : passe
 Commande "1" -- "1.." LigneCommande : contient
 LigneCommande --> Produit : concerne
-Agriculteur "1" -- "1" GestionProduit : utilise
-GestionProduit "1" -- "0..*" Produit : gère
+Agriculteur "1" -- "0..*" Produit : gère
 Catalogue o-- Produit : contient
 Admin -- Utilisateur : gère
 Commande -- Livraison : possède
+GestionProduitsEtCatalogue --> Catalogue : utilise
+Utilisateur --> Catalogue : consulte
+Agriculteur --> GestionProduitsEtCatalogue : utilise
 
-' ===== Répartition des membres =====
-
+' Répartition des membres
 note top of Utilisateur
 Ahlem
 US1 Inscription
@@ -129,4 +130,10 @@ Wael
 US9 Gestion utilisateurs
 US10 Statistiques
 end note
+
+note top of GestionProduitsEtCatalogue
+Nouvelle classe
+Gestion CRUD produits
+end note
+
 @enduml
