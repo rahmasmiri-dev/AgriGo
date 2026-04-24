@@ -1,3 +1,5 @@
+package com.AgriGo.models;
+
 import java.util.List;
 
 public class Admin extends Utilisateur {

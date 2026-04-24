@@ -1,3 +1,5 @@
+package com.AgriGo.models;
+
 public class GestionProduit {
 
     private Catalogue catalogue;

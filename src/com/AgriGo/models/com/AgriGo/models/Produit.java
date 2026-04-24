@@ -1,3 +1,5 @@
+package com.AgriGo.models;
+
 /**
  * Classe Produit
  * 
