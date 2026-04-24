@@ -1,0 +1,24 @@
+@startuml
+
+actor Utilisateur
+participant "Interface" as UI
+participant "Service Utilisateur" as SU
+participant "Base de données" as DB
+
+Utilisateur -> UI : saisir nom, email, mot de passe
+UI -> SU : sInscrire(données)
+
+SU -> SU : validerEmail()
+SU -> SU : validerMotDePasse()
+
+alt Données valides
+  SU -> DB : enregistrerUtilisateur()
+  DB --> SU : confirmation
+  SU --> UI : succès
+  UI --> Utilisateur : message succès
+else Données invalides
+  SU --> UI : erreur validation
+  UI --> Utilisateur : afficher message erreur
+end
+
+@enduml

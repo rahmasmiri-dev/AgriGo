@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Guide Git Débutant</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            line-height: 1.6;
+        }
+        h1, h2 {
+            color: #2c3e50;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 5px;
+            display: block;
+            margin: 10px 0;
+        }
+        table {
+            border-collapse: collapse;
+            width: 60%;
+        }
+        table, th, td {
+            border: 1px solid #333;
+            padding: 8px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>📘 Guide Git pour Débutant</h1>
+
+<h2>🎯 Objectif</h2>
+<p>Apprendre à créer et gérer un dépôt Git avec <strong>5 collaborateurs</strong>, avec <strong>1 branche par collaborateur</strong>.</p>
+
+<h2>🟢 1. Ouvrir un dossier local</h2>
+<code>cd chemin/vers/ton/dossier</code>
+
+<h2>🟡 2. Initialiser Git</h2>
+<code>git init</code>
+
+<h2>🔵 3. Lier au dépôt distant</h2>
+<code>git remote add origin https://github.com/user/NomProjet.git</code>
+<code>git remote -v</code>
+
+<h2>🟣 4. Ajouter et valider</h2>
+<code>git add .</code>
+<code>git commit -m "Initial commit"</code>
+
+<h2>🟠 5. Envoyer vers GitHub</h2>
+<code>git push -u origin main</code>
+
+<h2>🔴 6. Mettre à jour</h2>
+<code>git pull origin main</code>
+<code>git push</code>
+
+<h2>🟤 7. Créer une branche</h2>
+<code>git checkout -b feature-nom</code>
+
+<p>Exemple :</p>
+<code>
+git checkout -b feature-rahma<br>
+git checkout -b feature-gazzah<br>
+git checkout -b feature-sam<br>
+git checkout -b feature-wael<br>
+git checkout -b feature-amine
+</code>
+
+<h2>⚫ 8. Envoyer la branche</h2>
+<code>git push origin feature-nom</code>
+
+<h2>⚪ 9. Voir les branches</h2>
+<code>git branch</code>
+<code>git branch -r</code>
+<code>git branch -a</code>
+
+<h2>👥 Organisation</h2>
+<table>
+<tr><th>Membre</th><th>Branche</th></tr>
+<tr><td>Rahma</td><td>feature-rahma</td></tr>
+<tr><td>Gazzah</td><td>feature-gazzah</td></tr>
+<tr><td>Sam</td><td>feature-sam</td></tr>
+<tr><td>Wael</td><td>feature-wael</td></tr>
+<tr><td>Amine</td><td>feature-amine</td></tr>
+</table>
+
+<h2>⚠️ Bonnes pratiques</h2>
+<ul>
+    <li>Ne pas travailler sur main</li>
+    <li>Utiliser une branche personnelle</li>
+    <li>Faire plusieurs commits</li>
+    <li>Messages clairs</li>
+</ul>
+
+<h2>❌ Erreurs à éviter</h2>
+<ul>
+    <li>Oublier git pull</li>
+    <li>Travailler sur la même branche</li>
+    <li>Ne pas commit régulièrement</li>
+</ul>
+
+<h2>🧠 Résumé</h2>
+<code>
+git init<br>
+git remote add origin URL<br>
+git add .<br>
+git commit -m "message"<br>
+git push<br>
+git pull<br>
+git checkout -b branche<br>
+git branch
+</code>
+
+<h2>🏁 Conclusion</h2>
+<p>Avec cette méthode :</p>
+<ul>
+    <li>✔️ 1 dépôt partagé</li>
+    <li>✔️ 5 branches</li>
+    <li>✔️ Travail organisé sans conflit</li>
+</ul>
+
+</body>
+</html>

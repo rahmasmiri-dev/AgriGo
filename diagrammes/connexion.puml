@@ -1,0 +1,22 @@
+@startuml
+
+actor Utilisateur
+participant "Interface" as UI
+participant "Service Utilisateur" as SU
+participant "Base de données" as DB
+
+Utilisateur -> UI : saisir email + mot de passe
+UI -> SU : sAuthentifier(email, mdp)
+
+SU -> DB : verifierUtilisateur()
+DB --> SU : résultat
+
+alt Identifiants corrects
+  SU --> UI : accès autorisé
+  UI --> Utilisateur : redirection (dashboard)
+else Identifiants incorrects
+  SU --> UI : erreur
+  UI --> Utilisateur : afficher message erreur
+end
+
+@enduml
