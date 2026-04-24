@@ -35,6 +35,11 @@ public class Produit {
         this.categorie = categorie;
     }
 
+    // Constructeur sans catégorie (pour compatibilité Main)
+    public Produit(int idProduit, String nom, double prix, int quantite) {
+        this(idProduit, nom, prix, quantite, "");
+    }
+
     // ==================== GETTERS ====================
 
     /**

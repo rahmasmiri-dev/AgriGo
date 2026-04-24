@@ -22,6 +22,14 @@ public class Utilisateur {
         this.motDePasse = motDePasse;
     }
 
+    // Constructeur avec id explicite
+    public Utilisateur(int id, String nom, String email, String motDePasse) {
+        this.id = id;
+        this.nom = nom;
+        this.email = email;
+        this.motDePasse = motDePasse;
+    }
+
     // Getters
     public int getId() {
         return id;
