@@ -1,142 +1,97 @@
+package com.AgriGo.models;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        // === EXEMPLE DE SPRINT 1 AGRIGO ===
-        System.out.println("=== AgriGo – Sprint 1 ===\n");
+        Scanner scanner = new Scanner(System.in);
 
-        // Inscription
-        System.out.println("--- Inscription (Ali) ---");
-        System.out.println("Nouvel utilisateur inscrit : Ali (ali@example.com)\n");
+        System.out.println("=== AgriGo – Sprint 2 ===\n");
 
-        // Authentification
-        System.out.println("--- Authentification (Ali) ---");
-        System.out.println("Utilisateur créé : Ali (ali@example.com)");
-        System.out.println("Connexion réussie !\n");
+        // === UTILISATEURS ===
+        Client client = new Client(1, "Ali", "ali@mail.com", "123456");
+        Agriculteur agriculteur = new Agriculteur(2, "Sara", "sara@mail.com", "123456");
+        Admin admin = new Admin(3, "Admin", "admin@mail.com", "admin");
 
-        // Gestion Produits & Catalogue
-        System.out.println("--- Gestion Produits & Catalogue (Sara) ---");
-        System.out.println("Produit ajouté : Tomate, 2.5 DT, 100 unités");
-        System.out.println("Produit ajouté : Courgette, 3.0 DT, 50 unités");
-        System.out.println("Catalogue actuel : Tomate, Courgette, Pomme de terre, Carotte\n");
-
-        // Commande & Livraison
-        System.out.println("--- Commande & Livraison (Ali) ---");
-        System.out.println("Commande créée : 2x Courgette, 5x Tomate");
-        System.out.println("Total commande : 21.0 DT");
-        System.out.println("Livraison : Préparée → En cours de livraison\n");
-
-        // Admin
-        System.out.println("--- Admin (Admin) ---");
-        System.out.println("Nombre d'utilisateurs : 3");
-        System.out.println("Nombre de commandes : 1\n");
-        java.util.Scanner scanner = new java.util.Scanner(System.in);
-
-        // Création des utilisateurs
-        Client client = new Client(101, "Ali", "ali@example.com", "motdepasse");
-        Agriculteur agriculteur = new Agriculteur(201, "Sara", "sara@example.com", "password");
-        Admin admin = new Admin(301, "Admin", "admin@example.com", "admin123");
-
-        java.util.List<Utilisateur> utilisateurs = new java.util.ArrayList<>();
+        List<Utilisateur> utilisateurs = new ArrayList<>();
         utilisateurs.add(client);
         utilisateurs.add(agriculteur);
         utilisateurs.add(admin);
 
         // === AUTHENTIFICATION ===
-        System.out.println("=== AUTHENTIFICATION ===");
-        System.out.print("Email : ");
+        System.out.print("Email: ");
         String email = scanner.nextLine();
-        System.out.print("Mot de passe : ");
-        String motDePasse = scanner.nextLine();
 
-        Utilisateur utilisateurConnecte = null;
-        for (Utilisateur u : utilisateurs) {
-            if (u.sAuthentifier(email, motDePasse)) {
-                utilisateurConnecte = u;
-                break;
-            }
-        }
+        System.out.print("Mot de passe: ");
+        String mdp = scanner.nextLine();
 
-        if (utilisateurConnecte == null) {
-            System.out.println("Échec de l'authentification. Email ou mot de passe incorrect.");
-            scanner.close();
+        Utilisateur user = Utilisateur.sAuthentifier(email, mdp);
+
+        if (user == null) {
+            System.out.println("❌ Échec de connexion");
             return;
-        } else {
-            System.out.println("Bienvenue, " + utilisateurConnecte.getNom() + "!\n");
         }
 
-        Catalogue catalogue = new Catalogue();
-        GestionProduitsEtCatalogue gestion = new GestionProduitsEtCatalogue(catalogue);
+        System.out.println("✅ Bienvenue " + user.getNom());
 
-        // === CRÉATION ET AJOUT DE PRODUITS ===
-        System.out.println("=== GESTION DES PRODUITS ===\n");
+        // === GESTION PRODUITS ===
+        GestionProduit gestion = new GestionProduit();
 
-        Produit tomate = new Produit(1, "Tomate", 2.5, 100);
-        Produit courgette = new Produit(2, "Courgette", 3.0, 50);
-        Produit pommeDeTerre = new Produit(3, "Pomme de terre", 1.8, 200);
-        Produit carotte = new Produit(4, "Carotte", 2.2, 80);
+        gestion.ajouter("Tomate", 2.5, 100, "Légume");
+        gestion.ajouter("Pomme", 1.8, 150, "Fruit");
 
-        gestion.ajouterProduit(tomate);
-        gestion.ajouterProduit(courgette);
-        gestion.ajouterProduit(pommeDeTerre);
-        gestion.ajouterProduit(carotte);
-        System.out.println();
+        // === ROLE AGRICULTEUR ===
+        if (user instanceof Agriculteur) {
+            System.out.println("\n=== AGRICULTEUR ===");
 
-        // === AFFICHAGE DU CATALOGUE ===
-        System.out.println("Catalogue actuel :");
-        catalogue.afficherCatalogue();
-        System.out.println();
+            gestion.afficher();
 
-        // === MODIFICATION DE PRODUITS ===
-        System.out.println("=== MODIFICATIONS ===\n");
-        gestion.modifierNomProduit(courgette, "Courgette bio");
-        gestion.modifierPrixProduit(tomate, 3.0);
-        gestion.modifierQuantiteProduit(pommeDeTerre, 150);
-        gestion.modifierProduit(carotte, "Carotte orange", 2.5, 120);
-        System.out.println();
+            gestion.modifierPrix(1, 3.0);
+            gestion.modifierQuantite(2, 200);
 
-        // === AFFICHAGE APRÈS MODIFICATION ===
-        System.out.println("Catalogue après modification :");
-        catalogue.afficherCatalogue();
-        System.out.println();
+            gestion.supprimer(1);
 
-        // === SUPPRESSION DE PRODUITS ===
-        System.out.println("=== SUPPRESSION ===\n");
-        gestion.supprimerProduit(pommeDeTerre);
-        System.out.println();
+            System.out.println("\nAprès modification :");
+            gestion.afficher();
+        }
 
-        // === AFFICHAGE FINAL ===
-        System.out.println("Catalogue final :");
-        catalogue.afficherCatalogue();
-        System.out.println();
+        // === ROLE CLIENT ===
+        if (user instanceof Client) {
+            System.out.println("\n=== CLIENT ===");
 
-        // === UTILISATION AVEC LES AUTRES CLASSES ===
-        System.out.println("=== UTILISATION AVEC AUTRES CLASSES ===\n");
-        
-        client.consulterCatalogue(catalogue);
-        client.rechercherProduit(catalogue, "Tomate");
-        System.out.println();
+            gestion.afficher();
 
-        Commande commande = new Commande(5001, LocalDate.now());
-        commande.ajouterLigne(new LigneCommande(tomate, 5));
-        commande.ajouterLigne(new LigneCommande(courgette, 2));
-        commande.calculerTotal();
-        System.out.println();
+            Commande commande = new Commande(1001, LocalDate.now());
 
-        Livraison livraison = new Livraison("Préparée");
-        System.out.println(livraison);
-        livraison.mettreAJourStatut("En cours de livraison");
-        System.out.println(livraison);
-        System.out.println();
+            Produit p = gestion.getListeProduits().get(0);
 
-        admin.gererUtilisateurs(utilisateurs);
-        List<Commande> commandes = new ArrayList<>();
-        commandes.add(commande);
-        admin.consulterStatistiques(catalogue, commandes);
+            commande.ajouterLigne(new LigneCommande(p, 5));
+            commande.calculerTotal();
+
+            Livraison livraison = new Livraison("Préparée");
+            livraison.mettreAJourStatut("En cours");
+
+            System.out.println(livraison);
+        }
+
+        // === ROLE ADMIN ===
+        if (user instanceof Admin) {
+            System.out.println("\n=== ADMIN ===");
+
+            admin.gererUtilisateurs(utilisateurs);
+
+            List<Commande> commandes = new ArrayList<>();
+            commandes.add(new Commande(1001, LocalDate.now()));
+
+            admin.consulterStatistiques(null, commandes);
+        }
+
+        System.out.println("\n=== FIN SPRINT 2 ===");
         scanner.close();
     }
 }

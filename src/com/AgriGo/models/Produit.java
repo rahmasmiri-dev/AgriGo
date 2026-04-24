@@ -1,3 +1,5 @@
+package com.AgriGo.models;
+
 /**
  * Classe Produit
  * 
@@ -33,6 +35,11 @@ public class Produit {
         this.prix = prix;
         this.quantite = quantite;
         this.categorie = categorie;
+    }
+
+    // Constructeur sans catégorie (pour compatibilité Main)
+    public Produit(int idProduit, String nom, double prix, int quantite) {
+        this(idProduit, nom, prix, quantite, "");
     }
 
     // ==================== GETTERS ====================

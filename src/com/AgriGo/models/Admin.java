@@ -1,25 +1,25 @@
+package com.AgriGo.models;
 
+import java.util.List;
 
 public class Admin extends Utilisateur {
-    private String role;
 
-    public Admin(int id, String nom, String prenom, String email, String motDePasse, String role) {
-        super(id, nom, prenom, email, motDePasse);
-        this.role = role;
+    public Admin(int id, String nom, String email, String motDePasse) {
+        super(id, nom, email, motDePasse);
     }
 
-    public String getRole() {
-        return role;
+    // Afficher les utilisateurs
+    public void gererUtilisateurs(List<Utilisateur> utilisateurs) {
+        System.out.println("\n📋 Liste des utilisateurs :");
+        for (Utilisateur u : utilisateurs) {
+            System.out.println("- " + u.getNom() + " (" + u.getEmail() + ")");
+        }
     }
 
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-    @Override
-    public String toString() {
-        return "Admin{" +
-                "role='" + role + '\'' +
-                "} " + super.toString();
+    // Statistiques système
+    public void consulterStatistiques(Catalogue catalogue, List<Commande> commandes) {
+        System.out.println("\n📊 Statistiques :");
+        System.out.println("Nombre de produits : " + catalogue.nombreDeProduits());
+        System.out.println("Nombre de commandes : " + commandes.size());
     }
 }

@@ -1,3 +1,5 @@
+package com.AgriGo.models;
+
 public class LigneCommande {
     private Produit produit;
     private int quantite;
