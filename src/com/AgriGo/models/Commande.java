@@ -1,76 +1,43 @@
 package com.AgriGo.models;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
-public class Catalogue {
+public class Commande {
 
-    private List<Produit> produits;
+    private int id;
+    private LocalDate date;
+    private List<LigneCommande> lignes;
+    private double total;
 
-    public Catalogue() {
-        this.produits = new ArrayList<>();
+    // Constructeur
+    public Commande(int id, LocalDate date) {
+        this.id = id;
+        this.date = date;
+        this.lignes = new ArrayList<>();
+        this.total = 0;
     }
 
-    public void ajouterProduit(Produit produit) {
-        produits.add(produit);
+    // Ajouter ligne
+    public void ajouterLigne(LigneCommande ligne) {
+        lignes.add(ligne);
     }
 
-    public void supprimerProduit(Produit produit) {
-        produits.remove(produit);
-    }
-
-    public Produit rechercherParId(int id) {
-        for (Produit produit : produits) {
-            if (produit.getIdProduit() == id) {
-                return produit;
-            }
-        }
-        return null;
-    }
-
-    public List<Produit> rechercherParNom(String nom) {
-        return produits.stream()
-                .filter(p -> p.getNom().toLowerCase().contains(nom.toLowerCase()))
-                .collect(Collectors.toList());
-    }
-
-    public void rechercherProduit(String nomProduit) {
-        List<Produit> resultats = rechercherParNom(nomProduit);
-        if (resultats.isEmpty()) {
-            System.out.println("Aucun produit trouvé pour : " + nomProduit);
-        } else {
-            System.out.println("Produits trouvés pour '" + nomProduit + "' :");
-            for (Produit p : resultats) {
-                System.out.println(p);
-            }
+    // Calcul total
+    public void calculerTotal() {
+        total = 0;
+        for (LigneCommande l : lignes) {
+            total += l.getProduit().getPrix() * l.getQuantite();
         }
     }
 
-    public List<Produit> getProduits() {
-        return new ArrayList<>(produits);
+    // Getters
+    public int getId() {
+        return id;
     }
 
-    public void afficherCatalogue() {
-        System.out.println("\n=== Catalogue ===");
-        if (produits.isEmpty()) {
-            System.out.println("Le catalogue est vide.");
-        } else {
-            for (Produit produit : produits) {
-                System.out.println(produit);
-            }
-        }
-        System.out.println("=================\n");
+    public double getTotal() {
+        return total;
     }
-
-    public int getNombreProduits() {
-        return produits.size();
-    }
-
-    // compatibilité
-    public int nombreDeProduits() {
-        return getNombreProduits();
-    }
-    public List<Produit> obtenirTousProduits() {
-    return new ArrayList<>(produits);
-}
 }
