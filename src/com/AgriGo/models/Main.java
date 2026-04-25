@@ -11,19 +11,14 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("=== AgriGo – Sprint 2 ===\n");
+        System.out.println("=== AgriGo - Sprint 2 ===\n");
 
-        // === UTILISATEURS ===
-        Client client = new Client(1, "Ali", "ali@mail.com", "123456");
-        Agriculteur agriculteur = new Agriculteur(2, "Sara", "sara@mail.com", "123456");
-        Admin admin = new Admin(3, "Admin", "admin@mail.com", "admin");
+        // ================= INSCRIPTION =================
+        Utilisateur.sInscrire("Ali", "ali@mail.com", "123456");       // client
+        Utilisateur.sInscrire("Sara", "sara@mail.com", "123456");     // agriculteur
+        Utilisateur.sInscrire("Admin", "admin@mail.com", "admin");    // admin
 
-        List<Utilisateur> utilisateurs = new ArrayList<>();
-        utilisateurs.add(client);
-        utilisateurs.add(agriculteur);
-        utilisateurs.add(admin);
-
-        // === AUTHENTIFICATION ===
+        // ================= AUTH =================
         System.out.print("Email: ");
         String email = scanner.nextLine();
 
@@ -39,38 +34,25 @@ public class Main {
 
         System.out.println("✅ Bienvenue " + user.getNom());
 
-        // === GESTION PRODUITS ===
-        GestionProduit gestion = new GestionProduit();
+        // ================= DATA =================
+        Catalogue catalogue = new Catalogue();
+        GestionProduit gestion = new GestionProduit(catalogue);
 
-        gestion.ajouter("Tomate", 2.5, 100, "Légume");
-        gestion.ajouter("Pomme", 1.8, 150, "Fruit");
+        Produit p1 = new Produit(1, "Tomate", 2.5, 100);
+        Produit p2 = new Produit(2, "Pomme", 1.8, 150);
 
-        // === ROLE AGRICULTEUR ===
-        if (user instanceof Agriculteur) {
-            System.out.println("\n=== AGRICULTEUR ===");
+        gestion.ajouterProduit(p1);
+        gestion.ajouterProduit(p2);
 
-            gestion.afficher();
-
-            gestion.modifierPrix(1, 3.0);
-            gestion.modifierQuantite(2, 200);
-
-            gestion.supprimer(1);
-
-            System.out.println("\nAprès modification :");
-            gestion.afficher();
-        }
-
-        // === ROLE CLIENT ===
-        if (user instanceof Client) {
+        // ================= CLIENT =================
+        if (email.equals("ali@mail.com")) {
             System.out.println("\n=== CLIENT ===");
 
-            gestion.afficher();
+            catalogue.afficherCatalogue();
 
             Commande commande = new Commande(1001, LocalDate.now());
-
-            Produit p = gestion.getListeProduits().get(0);
-
-            commande.ajouterLigne(new LigneCommande(p, 5));
+            commande.ajouterLigne(new LigneCommande(p1, 5));
+            commande.ajouterLigne(new LigneCommande(p2, 2));
             commande.calculerTotal();
 
             Livraison livraison = new Livraison("Préparée");
@@ -79,19 +61,38 @@ public class Main {
             System.out.println(livraison);
         }
 
-        // === ROLE ADMIN ===
-        if (user instanceof Admin) {
+        // ================= AGRICULTEUR =================
+        if (email.equals("sara@mail.com")) {
+            System.out.println("\n=== AGRICULTEUR ===");
+
+            catalogue.afficherCatalogue();
+
+            // Modifier
+            p1.setPrix(3.0);
+            p2.setQuantite(200);
+
+            // Supprimer
+            gestion.supprimerProduit(p1);
+
+            System.out.println("\nAprès modification :");
+            catalogue.afficherCatalogue();
+        }
+
+        // ================= ADMIN =================
+        if (email.equals("admin@mail.com")) {
             System.out.println("\n=== ADMIN ===");
 
-            admin.gererUtilisateurs(utilisateurs);
+            Admin admin = new Admin(3, "Admin", "admin@mail.com", "admin");
+
+            admin.gererUtilisateurs(Utilisateur.getUtilisateurs());
 
             List<Commande> commandes = new ArrayList<>();
             commandes.add(new Commande(1001, LocalDate.now()));
 
-            admin.consulterStatistiques(null, commandes);
+            admin.consulterStatistiques(catalogue, commandes);
         }
 
-        System.out.println("\n=== FIN SPRINT 2 ===");
+        System.out.println("\n=== FIN ===");
         scanner.close();
     }
 }
