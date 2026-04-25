@@ -58,7 +58,7 @@ public class Main {
             Livraison livraison = new Livraison("Préparée");
             livraison.mettreAJourStatut("En cours");
 
-            System.out.println(livraison);
+            System.out.println(livraison de commande);
         }
 
         // ================= AGRICULTEUR =================
